@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cal</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		*{
+			box-sizing: border-box;
+			font-family: Roboto;
+			user-select: none;
+		}
+		.screen {
+			width:350px;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: justify;
+			border: 1px solid lightgrey;
+			margin-bottom: 10px;
+			border-radius: 5px;
+			padding: 0;
+			box-shadow: 0px 0px 2px lightgrey;
+		}
+
+		.screen span {
+			border-top: 1px solid lightgrey;
+			padding: 5px 5px;
+			color: #bbb;
+			border-bottom-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+		}
+		.screen textarea{
+			width:;
+			resize: none;
+			padding: 10px 5px;
+			height: 80px;
+			border: 0px solid blue;
+			border-radius: 5px;
+			font-size: 25px;
+			outline: none;
+		}
+		body{
+			display: flex;
+			flex-direction:column;
+			justify-content:center;
+			align-items: center;
+			width: 100%;
+			height: 100vh;
+			margin: 0;
+			padding: 10px;
+		}
+		.container{
+			display: grid;
+			grid-template-columns: 90px 90px 90px 90px;
+			grid-template-rows: 50px 50px 50px 50px 50px;
+		}
+
+		.container button {
+			margin: 2px 5px;
+			background: white;
+			border: 1px solid #bbb;
+			border-radius: 5px;
+			font-size: 20px;
+			box-shadow: 0px 0px 2px lightgrey;
+			color: black;
+		}
+		.container button:hover{
+			background: #eeeddd66;
+		}
+
+		.foot{
+			position : fixed;
+			width: 100%;
+			text-align: center;
+			top:95vh;
+			color: gray;
+			border-top: 1px solid lightgrey;
+		}
+		.title{
+			font-family: 'Times New Roman';
+			position: fixed;
+			width: 100%;
+			text-align: center;
+			top: 5px;
+			color: lightgrey;
+			border-bottom: 1px solid lightgrey;
+			font-size: 30px;
+			font-weight: lighter;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+  <div class="title">
+  	Mojlica - F20
+  </div>
+  <div class="screen">
+  	<textarea placeholder="0"></textarea>
+  	<span class="resultPlaceholder">calculating ...</span>
+  </div>
+  <div class="container">
+  	<button>AC</button>
+  	<button>(</button>
+  	<button>)</button>
+  	<button>
+		<svg width="30" height="24" fill="black" viewBox="0 -1 16 16">
+		  <path d="M5.83 5.146a.5.5 0 0 0 0 .708L7.975 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
+		  <path d="M13.683 1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zm-7.08 1a1 1 0 0 0-.76.35L1 8l4.844 5.65a1 1 0 0 0 .759.35h7.08a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1h-7.08z"/>
+		</svg>
+	</button>
+
+  	<button>9</button>
+  	<button>8</button>
+  	<button>7</button>
+  	<button>+</button>
+
+  	<button>6</button>
+  	<button>5</button>
+  	<button>4</button>
+  	<button>-</button>
+
+  	<button>3</button>
+  	<button>2</button>
+  	<button>1</button>
+  	<button>*</button>
+
+  	<button>0</button>
+  	<button>.</button>
+  	<button>=</button>
+  	<button>/</button>
+  </div>
+
+  <footer class="foot">
+      Developed And Design by- <b> Shihabe Uddin </b> 
+  </footer>
+
+  <script type="text/javascript">
+  	let screen =  document.querySelector("textarea")
+  	let AllBtn =  document.querySelectorAll("button")
+  	let holder = document.querySelector(".resultPlaceholder")
+
+  	function calculateFinal (){
+  		let result = eval (screen.value)
+  		screen.value = result
+  		holder.innerHTML = "&nbsp;"
+  	}
+
+  	function calculatePre (){
+  		let result
+  		try {
+  			result = eval (screen.value)
+  			holder.textContent = result
+  			console.log(result)
+  		}
+  		catch(err){
+  			console.log(err)
+  			holder.innerHTML = `<span style="color:#ff8080;"> Syntex Error </span>`
+  		}
+  		
+  	}
+
+  	function ClearAll(){
+  		console.log("Ac pressed")
+  		screen.value = ""
+  		holder.textContent = "Calculating ..."
+  	}
+
+  	function adjustScreenVal(){
+  		let v = screen.value 
+  		let vl = v.length 
+  		screen.value += "*("
+  		calculatePre()
+  	}
+
+  	let Ab = Array.prototype.slice.call(AllBtn)
+  	console.log (Ab)
+  	Ab.map(btn=>{
+  		btn.addEventListener("click", (e)=>{
+  			let cv = btn.textContent
+  			let cvl = cv.length
+  			console.log("length "+cvl)
+  			if (cvl > 2){
+  				let v = screen.value 
+  				let vl = v.length 
+  				screen.value = v.slice(0, vl-1)
+  				calculatePre();
+  				// holder.textContent = "calculating ..."
+  			}
+  			else if (cv == "("){
+  				adjustScreenVal()
+  				console.log("No need to adjust")
+  			}
+  			else if (cv == "=" ){
+  				calculateFinal()
+  			}
+  			else{
+  				screen.value += cv
+	  			cv == "AC" ? 
+	  				ClearAll() : 
+	  				holder.textContent="calculating ..."
+	  			
+	  			Number(cv) || cv=="0" || cv == ")" ? 
+	  			    calculatePre() : 
+	  			    holder.textContent="calculating ..."
+	  		}
+  		})
+  	})
+  	
+  	screen.addEventListener("change", (e)=>{
+  		console.log(e.target.value)
+  		calculatePre()
+  	})
+  </script>
+
+</body>
+</html>
